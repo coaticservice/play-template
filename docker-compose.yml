@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo:3.6.0-jessie
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongodb-data:/data/db
+
+  mailcatcher:
+    image: monsieurbiz/mailcatcher
+    ports:
+      - "25:25"
+      - "1080:1080"
+  mongoexpress:
+    image: mongo-express
+    ports:
+        - "8081:8081"
+    links:
+        - mongo
