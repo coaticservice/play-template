@@ -3,18 +3,20 @@ package models.daos
 import com.mohiva.play.silhouette.api.LoginInfo
 import com.mohiva.play.silhouette.impl.providers.OAuth2Info
 import com.mohiva.play.silhouette.persistence.daos.DelegableAuthInfoDAO
+import javax.inject.Inject
 import models.daos.OAuth2InfoDAO._
 import play.api.libs.concurrent.Execution.Implicits._
+import play.modules.reactivemongo.ReactiveMongoApi
 
 import scala.collection.mutable
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
  * The DAO to store the OAuth2 information.
  *
  * Note: Not thread safe, demo only.
  */
-class OAuth2InfoDAO extends DelegableAuthInfoDAO[OAuth2Info] {
+class OAuth2InfoDAO @Inject() (val reactiveMongoApi: ReactiveMongoApi)(implicit ex: ExecutionContext) extends DelegableAuthInfoDAO[OAuth2Info] {
 
   /**
    * Finds the auth info which is linked with the specified login info.
