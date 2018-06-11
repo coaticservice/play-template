@@ -1,0 +1,31 @@
+language: scala
+dist: trusty
+sudo: true
+group: beta
+jdk:
+  - oraclejdk8
+env:
+  global:
+    secure: "NS2hMbBcmi6EF4QxtcNs4A2ZuNmIdLYQRJUWWejgnD4YtcsmoVjxrHRedqrnDdui4DyvaxWhg/3Uds23jEKTSbbh3ZphLO77BVgM2nUGUvVoa4i6qGF2eZFlIhq2G1gM700GPV7X4KmyjYi2HtH8CWBTkqP3g0An63mCZw/Gnlk="
+script:
+  - framework/bin/$SCRIPT
+cache:
+  directories:
+  - $HOME/.ivy2/cache
+  - $HOME/.sbt/boot/
+before_cache:
+- rm -rf $HOME/.ivy2/local
+- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
+- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
+- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+- find $HOME/.sbt -name "*.lock" -delete
+
+
+notifications:
+  webhooks:
+    urls:
+    - https://webhooks.gitter.im/e/a4b5f6fe6db37a780d74
+    on_success: always  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: never     # options: [always|never|change] default: always
+  slack: coaticservice:X4TsZaCjbh1uTE6rxgTsmez3
