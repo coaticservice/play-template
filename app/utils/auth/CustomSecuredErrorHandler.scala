@@ -16,11 +16,7 @@ import scala.concurrent.Future
  *
  * @param messagesApi The Play messages API.
  */
-class CustomSecuredErrorHandler @Inject() (val messagesApi: MessagesApi)
-  extends SecuredErrorHandler
-  with I18nSupport
-  with RequestExtractors
-  with Rendering {
+class CustomSecuredErrorHandler @Inject() (val messagesApi: MessagesApi) extends BaseHandler {
 
   /**
    * Called when a user is not authenticated.
@@ -31,7 +27,7 @@ class CustomSecuredErrorHandler @Inject() (val messagesApi: MessagesApi)
    * @return The result to send to the client.
    */
   override def onNotAuthenticated(implicit request: RequestHeader) =
-    produceResponse(Unauthorized, Messages("silhouette.not.authenticated"), true)
+    produceResponse(Unauthorized, Messages("silhouette.not.authenticated"), false)
 
   /**
    * Called when a user is authenticated but not authorized.
@@ -43,20 +39,4 @@ class CustomSecuredErrorHandler @Inject() (val messagesApi: MessagesApi)
    */
   override def onNotAuthorized(implicit request: RequestHeader) =
     produceResponse(Unauthorized, Messages("silhouette.access.denied"), true)
-
-  protected def produceResponse[S <: Status](status: S, msg: String, authorized: Boolean)(
-    implicit
-    request: RequestHeader
-  ): Future[Result] =
-    Future.successful(render {
-      case Accepts.Json() => status(toJsonError(msg))
-      case _ =>  if(authorized) {
-        Redirect(controllers.routes.SignInController.view()).flashing("error" -> Messages("access.denied"))
-      } else {
-        Redirect(controllers.routes.SignInController.view())
-      }
-    })
-
-  protected def toJsonError(message: String) =
-    Json.obj("message" -> message)
 }

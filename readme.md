@@ -1,11 +1,10 @@
-
-[![Build Status](https://travis-ci.org/iheartradio/play-swagger.svg)](https://travis-ci.org/iheartradio/play-swagger)
-[![Coverage Status](https://coveralls.io/repos/iheartradio/play-swagger/badge.svg?branch=master&service=github)](https://coveralls.io/github/iheartradio/play-swagger?branch=master)
-[![Stories in Ready](https://badge.waffle.io/iheartradio/play-swagger.svg?label=ready&title=Ready)](http://waffle.io/iheartradio/play-swagger)
-[ ![Download](https://api.bintray.com/packages/iheartradio/maven/play-swagger/images/download.svg) ](https://bintray.com/iheartradio/maven/play-swagger/_latestVersion)
-[![Gitter](https://badges.gitter.im/iheartradio/play-swagger.svg)](https://gitter.im/iheartradio/play-swagger?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Build Status](https://travis-ci.org/coaticservice/play-template.svg?branch=master)](https://travis-ci.org/coaticservice/play-template.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/coaticservice/play-template/badge.svg?branch=master)](https://coveralls.io/github/coaticservice/play-template?branch=master)
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/coaticservice/play-template.svg?columns=all)](https://waffle.io/coaticservice/play-template)
 
 # Play Framework, ReactiveMongo, Silhouette, Swagger + Swagger UI Template
+
+This is a mix of many templates and to create a working one. Hopefully.
 
 
  
