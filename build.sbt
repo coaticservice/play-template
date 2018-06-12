@@ -42,5 +42,4 @@ libraryDependencies += specs2 % Test
 resolvers += Resolver.jcenterRepo
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
-resolvers += "iheartradio-maven" at "https://dl.bintray.com/iheartradio/maven"
 resolvers += "atlassian-maven" at "https://maven.atlassian.com/content/repositories/atlassian-public"
