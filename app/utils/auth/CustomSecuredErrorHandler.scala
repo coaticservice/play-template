@@ -27,7 +27,7 @@ class CustomSecuredErrorHandler @Inject() (val messagesApi: MessagesApi) extends
    * @return The result to send to the client.
    */
   override def onNotAuthenticated(implicit request: RequestHeader) =
-    produceResponse(Unauthorized, Messages("silhouette.not.authenticated"), false)
+    produceResponse(Unauthorized, Messages("silhouette.not.authenticated"), authenticated = false)
 
   /**
    * Called when a user is authenticated but not authorized.
@@ -38,5 +38,5 @@ class CustomSecuredErrorHandler @Inject() (val messagesApi: MessagesApi) extends
    * @return The result to send to the client.
    */
   override def onNotAuthorized(implicit request: RequestHeader) =
-    produceResponse(Unauthorized, Messages("silhouette.access.denied"), true)
+    produceResponse(Unauthorized, Messages("silhouette.access.denied"), authenticated = true)
 }

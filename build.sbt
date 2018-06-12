@@ -29,7 +29,6 @@ libraryDependencies += "com.typesafe.play" % "play-json-joda_2.12" % "2.6.0"
 libraryDependencies += "com.typesafe.play" %% "play-mailer" % "6.0.1"
 libraryDependencies += "com.typesafe.play" %% "play-mailer-guice" % "6.0.1"
 
-
 libraryDependencies += "io.swagger" %% "swagger-play2" % "1.6.1-SNAPSHOT"
 
 libraryDependencies += "com.adrianhurt" %% "play-bootstrap" % "1.2-P26-B3"
