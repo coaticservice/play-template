@@ -1,18 +1,52 @@
 language: scala
-
-# These directories are cached to S3 at the end of the build
+scala:
+# When updating Scala versions, also check the excludes
+# in build matrix below.
+- 2.11.12
+- 2.12.6
+jdk:
+- oraclejdk8
+- oraclejdk9
+- oraclejdk10
+- oraclejdk11
+env:
+  matrix:
+    - SCRIPT=scripts/test-sbt
+script:
+- $SCRIPT
 cache:
   directories:
-    - $HOME/.ivy2/cache
-    - $HOME/.sbt/boot/
+  - "$HOME/.ivy2/cache"
+  - "$HOME/.gradle/caches"
+before_cache:
+- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
+- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
+- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
 
-jdk:
-  - oraclejdk8
+# Exclude some combinations from build matrix. See:
+# https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
+matrix:
+  exclude:
+    - scala: 2.11.12
+      jdk: oraclejdk9
+    - scala: 2.11.12
+      jdk: oraclejdk10
+    - scala: 2.11.12
+      jdk: oraclejdk11
+  allow_failures:
+    # We should allow failures here since Java 11 removed some modules including
+    # java.xml.bind which we are adding when running with Java 9+. For more details
+    # see http://openjdk.java.net/jeps/320
+    #
+    # Play already has a fix for that, but it needs to be backported and released
+    # for 2.6.x: https://github.com/playframework/playframework/pull/8382
+    - jdk: oraclejdk11
 
-script:
-  ## This runs the template with the default parameters, and runs test within the templated app.
-  - sbt -Dfile.encoding=UTF8 -J-XX:ReservedCodeCacheSize=256M test
-
-  # Tricks to avoid unnecessary cache updates
-  - find $HOME/.sbt -name "*.lock" | xargs rm
-  - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+notifications:
+  webhooks:
+    urls:
+    - https://webhooks.gitter.im/e/d2c8a242a2615f659595
+    on_success: always
+    on_failure: always
+  slack:
+    secure: LIYWP1YF6DEXh4gBQ0DlaQP+kenerp7Q1AC3y/+egJYUu1g2TWmBlkcpXOcdHzrgTIUX/LYnSlhowIpsW7/YwcyLn3rOJI6SJM00DrDPRm6X1586P9DcR4XiX7MChewzbnmebx6KISt6bFtfvcd67J2cinmShwXQh2AmwvuT3Tc=
