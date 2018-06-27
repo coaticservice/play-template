@@ -38,7 +38,7 @@ class AuthTokenDAOImpl @Inject() (val reactiveMongoApi: ReactiveMongoApi)(implic
    * @param dateTime The current date time.
    */
   def findExpired(dateTime: DateTime): Future[Seq[AuthToken]] = {
-    val query = Json.obj("expiry" -> Json.obj($"$lt"$ -> dateTime))
+    val query = Json.obj("expiry" -> Json.obj("$lt" -> dateTime))
     collection.flatMap(_.find(query).cursor[AuthToken](readPreference = ReadPreference.primary).collect[Seq]())
   }
 
